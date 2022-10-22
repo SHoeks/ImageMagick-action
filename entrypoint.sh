@@ -12,6 +12,8 @@ for i in $(ls *.jpg); do
   convert -quality 80 -resize "^400>" ${i%%.*}_400.jpg ${i%%.*}_400.webp
 done
 
+mv *.webp ../webp
+
 find . -type f ! -name '*.jpg' -delete
 
 
