@@ -1,7 +1,7 @@
 #!/bin/sh -l
 #cd $1
 #mogrify -path . -auto-orient -thumbnail $2 *.*
-cd /jpg/
+cd jpg/
 for i in $(ls *.jpg); do
   echo $i
   w=$(identify -format "%w" $i)
