@@ -9,7 +9,7 @@ for i in $(ls *.jpg); do
   w=$(identify -format "%w" $i)
   h=$(identify -format "%h" $i)
   cp $i ${i%%.*}_400.jpg
-  mogrify -format webp -quality 80 -resize "^400>" ${i%%.*}_400.jpg
+  convert -quality 80 -resize "^400>" ${i%%.*}_400.jpg ${i%%.*}_400.webp
 done
 
 find . -type f ! -name '*.jpg' -delete
