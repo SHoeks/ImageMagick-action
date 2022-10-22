@@ -11,9 +11,9 @@ for i in $(ls *.jpg); do
   h=$(identify -format "%h" $i)
   
   if [[ $w > $h ]];then
-      convert -quality 80 -resize 300x200\! ${i%%.*}_400.jpg ${i%%.*}_300x200.webp
+      convert -quality 80 -resize 300x200\! ${i%%.*}.jpg ${i%%.*}_300x200.webp
   else
-      convert -quality 80 -resize 200x300\! ${i%%.*}_400.jpg ${i%%.*}_200x300.webp
+      convert -quality 80 -resize 200x300\! ${i%%.*}.jpg ${i%%.*}_200x300.webp
   fi  
   
 done
