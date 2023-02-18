@@ -1,8 +1,8 @@
 #!/bin/sh -l
 
-WebsitePath=$(dirname $0)
-echo "Website path: "$WebsitePath
-cd "$WebsitePath"
+# WebsitePath=$(dirname $0)
+# echo "Website path: "$WebsitePath
+# cd "$WebsitePath"
 cd "images"
 
 qlty=80
