@@ -20,6 +20,8 @@ for f in *\ *; do mv "$f" "${f// /_}"; done
 
 for i in $(ls *.jpg); do
 
+    echo "Adding dust to: " $i
+
     w=$(identify -format "%w" $i)
     h=$(identify -format "%h" $i)
     if [[ $h -gt $w ]]; then
@@ -35,6 +37,7 @@ for i in $(ls *.jpg); do
         s=$(shuf -i 1-7 -n1) # s=$(jot -r 1  1 7)
         echo $x $y $r $s
         dust_sample="dust4_s"$s"_2.jpg"
+        echo $dust_sample
         convert -background 'rgba(0,0,0,0)' -rotate $r "../../dust/$dust_sample" dust_use.png
         convert $i dust_use.png -geometry "+$x+$y" -compose overlay -composite $i
         rm dust_use.png
