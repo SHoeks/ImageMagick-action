@@ -18,30 +18,39 @@ ls *.jpg
 echo " "
 for f in *\ *; do mv "$f" "${f// /_}"; done
 
-# for i in $(ls *.jpg); do
-#     #mogrify -auto-level $i
-#     mogrify -contrast-stretch 0.5x0.05% "$i"
+for i in $(ls *.jpg); do
 
-#     w=$(identify -format "%w" $i)
-#     h=$(identify -format "%h" $i)
-#     if [[ $h -gt $w ]];then
-#         mogrify -rotate 90 $i
-#         w2=$h; h2=$w
-#     else
-#         w2=$w; h2=$h
-#     fi
-#     ratio=$(echo "($w2/$h2)" | bc -l)
-#     border_size_h=3
-#     border_size_b=$(echo "($border_size_h*$ratio)" | bc)
-#     new_height=$(echo "(3000/$ratio)" | bc)
-
-#     echo "resizing to: 3000x"$new_height
-#     mogrify -resize 3000x$new_height $i
-#     mogrify -bordercolor 'rgb(248,248,248)' -border $border_size_h%x$border_size_b% $i
-#     if [[ $h -gt $w ]];then
-#         mogrify -rotate -90 $i
-#     fi
-# done 
+    w=$(identify -format "%w" $i)
+    h=$(identify -format "%h" $i)
+    if [[ $h -gt $w ]];then
+        mogrify -rotate 90 $i
+        w2=$h; h2=$w
+    else
+        w2=$w; h2=$h
+    fi
+    ratio=$(echo "($w2/$h2)" | bc -l)
+    new_height=$(echo "(3000/$ratio)" | bc)
+    echo "resizing to: 3000x"$new_height
+    mogrify -resize 3000x$new_height $i
+    
+    # add dust
+    for j in {1..50}
+    do
+        x=$(jot -r 1  0 3000)
+        y=$(jot -r 1  0 2000)
+        r=$(jot -r 1  -90 90)
+        s=$(jot -r 1  1 7)
+        echo $x $y $r $s
+        dust_sample="dust4_s"$s"_2.jpg"
+        convert -background 'rgba(0,0,0,0)' -rotate $r "dust/$dust_sample" dust_use.png
+        convert $i dust_use.png -geometry "+$x+$y" -compose overlay -composite $i
+        rm dust_use.png
+    done
+    
+    if [[ $h -gt $w ]];then
+        mogrify -rotate -90 $i
+    fi
+done 
 
 
 n=$(ls *.jpg | wc -l); c=1
