@@ -42,7 +42,7 @@ for i in $(ls *.jpg); do
         s=$(jot -r 1  1 7)
         echo $x $y $r $s
         dust_sample="dust4_s"$s"_2.jpg"
-        convert -background 'rgba(0,0,0,0)' -rotate $r "../dust/$dust_sample" dust_use.png
+        convert -background 'rgba(0,0,0,0)' -rotate $r "../../dust/$dust_sample" dust_use.png
         convert $i dust_use.png -geometry "+$x+$y" -compose overlay -composite $i
         rm dust_use.png
     done
