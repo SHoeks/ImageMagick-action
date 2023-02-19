@@ -22,20 +22,13 @@ for i in $(ls *.jpg); do
 
     w=$(identify -format "%w" $i)
     h=$(identify -format "%h" $i)
-    if [[ $h -gt $w ]];then
+    if [[ $h -gt $w ]]; then
         mogrify -rotate 90 $i
-        w2=$h; h2=$w
-    else
-        w2=$w; h2=$h
     fi
-    ratio=$(echo "($w2/$h2)" | bc -l)
-    new_height=$(echo "(3000/$ratio)" | bc)
-    echo "resizing to: 3000x"$new_height
-    mogrify -resize 3000x$new_height $i
+    mogrify -resize 3000x2000 $i
     
     # add dust
-    for j in {1..50}
-    do
+    for j in {1..50}; do
         x=$(jot -r 1  0 3000)
         y=$(jot -r 1  0 2000)
         r=$(jot -r 1  -90 90)
