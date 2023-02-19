@@ -29,10 +29,10 @@ for i in $(ls *.jpg); do
     
     # add dust
     for j in {1..50}; do
-        x=$(jot -r 1  0 3000)
-        y=$(jot -r 1  0 2000)
-        r=$(jot -r 1  -90 90)
-        s=$(jot -r 1  1 7)
+        x=$(shuf -i 0-3000 -n1) # x=$(jot -r 1  0 3000)
+        y=$(shuf -i 0-2000 -n1) # y=$(jot -r 1  0 2000)
+        r=$(shuf -i 0-360 -n1) # r=$(jot -r 1  0 360)
+        s=$(shuf -i 1-7 -n1) # s=$(jot -r 1  1 7)
         echo $x $y $r $s
         dust_sample="dust4_s"$s"_2.jpg"
         convert -background 'rgba(0,0,0,0)' -rotate $r "../../dust/$dust_sample" dust_use.png
