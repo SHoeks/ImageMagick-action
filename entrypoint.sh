@@ -18,35 +18,30 @@ ls *.jpg
 echo " "
 for f in *\ *; do mv "$f" "${f// /_}"; done
 
-for i in $(ls *.jpg); do
-
-    echo "Adding dust to: " $i
-
-    w=$(identify -format "%w" $i)
-    h=$(identify -format "%h" $i)
-    if [[ $h -gt $w ]]; then
-        mogrify -rotate 90 $i
-    fi
-    mogrify -resize 3000x2000 $i
-    
-    # add dust
-    for j in $(seq 50); do
-        x=$(shuf -i 0-3000 -n1) # x=$(jot -r 1  0 3000)
-        y=$(shuf -i 0-2000 -n1) # y=$(jot -r 1  0 2000)
-        r=$(shuf -i 0-360 -n1) # r=$(jot -r 1  0 360)
-        s=$(shuf -i 1-219 -n1) # s=$(jot -r 1  1 7)
-        echo $x $y $r $s
-        dust_sample="dust4_s"$s"_2.jpg"
-        echo $dust_sample $j
-        convert -background 'rgba(0,0,0,0)' -rotate $r "../../dust/$dust_sample" dust_use.png
-        convert $i dust_use.png -geometry "+$x+$y" -compose overlay -composite $i
-    done
-    
-    if [[ $h -gt $w ]];then
-        mogrify -rotate -90 $i
-    fi
-done 
-
+# for i in $(ls *.jpg); do
+#     echo "Adding dust to: " $i
+#     w=$(identify -format "%w" $i)
+#     h=$(identify -format "%h" $i)
+#     if [[ $h -gt $w ]]; then
+#         mogrify -rotate 90 $i
+#     fi
+#     mogrify -resize 3000x2000 $i
+#     # add dust
+#     for j in $(seq 50); do
+#         x=$(shuf -i 0-3000 -n1) # x=$(jot -r 1  0 3000)
+#         y=$(shuf -i 0-2000 -n1) # y=$(jot -r 1  0 2000)
+#         r=$(shuf -i 0-360 -n1) # r=$(jot -r 1  0 360)
+#         s=$(shuf -i 1-219 -n1) # s=$(jot -r 1  1 7)
+#         echo $x $y $r $s
+#         dust_sample="dust4_s"$s"_2.jpg"
+#         echo $dust_sample $j
+#         convert -background 'rgba(0,0,0,0)' -rotate $r "../../dust/$dust_sample" dust_use.png
+#         convert $i dust_use.png -geometry "+$x+$y" -compose overlay -composite $i
+#     done
+#     if [[ $h -gt $w ]];then
+#         mogrify -rotate -90 $i
+#     fi
+# done 
 
 n=$(ls *.jpg | wc -l); c=1
 for i in $(ls *.jpg); do
